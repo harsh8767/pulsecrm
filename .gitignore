@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+(
+echo node_modules/
+echo .env
+echo .env.*
+echo !.env.example
+echo dist/
+echo build/
+echo coverage/
+)
