@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Aarav Sharma",
+    "company": "Nimbus Tech",
+    "status": "Active",
+    "dealValue": 12000,
+    "createdAt": "2026-05-12",
+    "notes": []
+  },
+  {
+    "id": 2,
+    "name": "Priya Nair",
+    "company": "BrightPath",
+    "status": "Lead",
+    "dealValue": 8000,
+    "createdAt": "2026-06-03",
+    "notes": []
+  },
+  {
+    "id": 3,
+    "name": "Rohan Mehta",
+    "company": "Orbit Labs",
+    "status": "Churned",
+    "dealValue": 5000,
+    "createdAt": "2026-08-19",
+    "notes": []
+  },
+  {
+    "id": 4,
+    "name": "Sneha Iyer",
+    "company": "Greenleaf",
+    "status": "Active",
+    "dealValue": 15000,
+    "createdAt": "2026-09-27",
+    "notes": []
+  }
+]
