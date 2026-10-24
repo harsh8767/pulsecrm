@@ -54,7 +54,7 @@ const navigationItems = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({ user, onLogout }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -100,6 +100,14 @@ function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
+      <div className="sidebar-footer">
+        <p className="sidebar-user">{user.name}</p>
+        <p className="sidebar-email">{user.email}</p>
+        <button className="reset-button" onClick={onLogout}>
+          Log out
+        </button>
+      </div>
     </aside>
   );
 }

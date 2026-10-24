@@ -3,6 +3,16 @@ import pg from "pg";
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 await pool.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )
+`);
+
+await pool.query(`
   CREATE TABLE IF NOT EXISTS customers (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
@@ -14,26 +24,16 @@ await pool.query(`
   )
 `);
 
-const { rows } = await pool.query("SELECT COUNT(*) AS total FROM customers");
+await pool.query(`
+  ALTER TABLE customers
+  ADD COLUMN IF NOT EXISTS owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+`);
 
-if (Number(rows[0].total) === 0) {
-  const startingCustomers = [
-    ["Aarav Sharma", "Nimbus Tech", "Active", 12000, "2026-05-12"],
-    ["Priya Nair", "BrightPath", "Lead", 8000, "2026-06-03"],
-    ["Rohan Mehta", "Orbit Labs", "Churned", 5000, "2026-08-19"],
-    ["Sneha Iyer", "Greenleaf", "Active", 15000, "2026-09-27"],
-  ];
+await pool.query(
+  "CREATE INDEX IF NOT EXISTS customers_owner_id_idx ON customers (owner_id)"
+);
 
-  for (const [name, company, status, dealValue, createdAt] of startingCustomers) {
-    await pool.query(
-      `INSERT INTO customers (name, company, status, deal_value, created_at)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [name, company, status, dealValue, createdAt]
-    );
-  }
-  console.log("Table created and starting customers added.");
-} else {
-  console.log("Table already has data, nothing added.");
-}
+const removed = await pool.query("DELETE FROM customers WHERE owner_id IS NULL");
+console.log(`Database ready. Removed ${removed.rowCount} old customers with no owner.`);
 
 await pool.end();

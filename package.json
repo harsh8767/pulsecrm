@@ -12,7 +12,9 @@
     "db:setup": "node --env-file=.env server/setup.js"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

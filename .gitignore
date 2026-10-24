@@ -32,3 +32,6 @@ echo dist/
 echo build/
 echo coverage/
 )
+
+
+.env

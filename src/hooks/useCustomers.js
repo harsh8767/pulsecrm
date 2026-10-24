@@ -76,6 +76,18 @@ function useCustomers() {
     }
   }
 
+  async function addSampleCustomers() {
+    setErrorMessage("");
+    try {
+      const sampleCustomers = await requestJson(`${API_URL}/sample`, {
+        method: "POST",
+      });
+      setCustomers(sampleCustomers);
+    } catch {
+      setErrorMessage("Could not add the sample customers.");
+    }
+  }
+
   return {
     customers,
     isLoading,
@@ -83,6 +95,7 @@ function useCustomers() {
     addCustomer,
     updateCustomer,
     deleteCustomer,
+    addSampleCustomers,
   };
 }
 
